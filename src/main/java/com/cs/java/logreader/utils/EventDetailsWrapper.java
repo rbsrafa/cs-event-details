@@ -6,18 +6,18 @@ import com.cs.java.logreader.models.ServerEventDetails;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventsDetails {
-    private List<EventDetails> eventsDetails = new ArrayList<>();
+public class EventDetailsWrapper {
+    private List<EventDetails> eventDetails = new ArrayList<>();
     private List<ServerEventDetails> serverEventDetails = new ArrayList<>();
 
-    public EventsDetails() {}
+    public EventDetailsWrapper() {}
 
     public List<EventDetails> getEventDetails() {
-        return eventsDetails;
+        return eventDetails;
     }
 
     public void setEventDetails(List<EventDetails> eventsDetails) {
-        this.eventsDetails = eventsDetails;
+        this.eventDetails = eventsDetails;
     }
 
     public List<ServerEventDetails> getServerEventDetails() {

@@ -6,11 +6,11 @@ import com.cs.java.logreader.models.ServerEventLog;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventLogs {
+public class EventLogsWrapper {
     private List<EventLog> eventLogs = new ArrayList<>();
     private List<ServerEventLog> serverEventLogs = new ArrayList<>();
 
-    public EventLogs() {}
+    public EventLogsWrapper() {}
 
     public List<EventLog> getEventLogs() {
         return eventLogs;

@@ -2,9 +2,9 @@ package com.cs.java.logreader;
 
 import com.cs.java.logreader.repositories.EventDetailsRepository;
 import com.cs.java.logreader.repositories.ServerEventDetailsRepository;
-import com.cs.java.logreader.utils.EventLogs;
+import com.cs.java.logreader.utils.EventLogsWrapper;
 import com.cs.java.logreader.utils.EventUtils;
-import com.cs.java.logreader.utils.EventsDetails;
+import com.cs.java.logreader.utils.EventDetailsWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,16 +36,16 @@ public class LogReaderApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		EventUtils utils = new EventUtils();
 
-		EventLogs eventLogs = utils.getEventLogs(logfilePath);
+		EventLogsWrapper eventLogsWrapper = utils.getEventLogs(logfilePath);
 
 		// Generate Event Details
-		EventsDetails eventsDetails = new EventsDetails();
-		eventsDetails.setEventDetails(utils.generateEventDetails(eventLogs));
-		eventsDetails.setServerEventDetails(utils.generateServerEventDetails(eventLogs));
+		EventDetailsWrapper eventDetailsWrapper = new EventDetailsWrapper();
+		eventDetailsWrapper.setEventDetails(utils.generateEventDetails(eventLogsWrapper));
+		eventDetailsWrapper.setServerEventDetails(utils.generateServerEventDetails(eventLogsWrapper));
 
 		// Persist Event Details
-		eventsDetails.getEventDetails().forEach(event -> this.events.save(event));
-		eventsDetails.getServerEventDetails().forEach(event -> this.serverEvents.save(event));
+		eventDetailsWrapper.getEventDetails().forEach(event -> this.events.save(event));
+		eventDetailsWrapper.getServerEventDetails().forEach(event -> this.serverEvents.save(event));
 	}
 
 }

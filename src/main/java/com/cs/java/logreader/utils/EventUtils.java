@@ -7,14 +7,12 @@ import com.cs.java.logreader.models.State;
 import com.cs.java.logreader.models.EventLog;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.core.io.ClassPathResource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,12 +23,12 @@ public class EventUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(EventUtils.class);
 
-    public List<EventDetails> generateEventDetails(EventLogs eventLogs) {
+    public List<EventDetails> generateEventDetails(EventLogsWrapper eventLogsWrapper) {
         logger.info("Generating event details...");
         List<EventDetails> eventDetails = new ArrayList<>();
         Map<String, EventDetails> eventDetailsMap = new HashMap<>();
 
-        eventLogs.getEventLogs().forEach(event -> {
+        eventLogsWrapper.getEventLogs().forEach(event -> {
             logger.debug("Processing event: {}", event);
 
             if(!eventDetailsMap.containsKey(event.getId())) {
@@ -51,12 +49,12 @@ public class EventUtils {
         return eventDetails;
     }
 
-    public List<ServerEventDetails> generateServerEventDetails(EventLogs eventLogs) {
+    public List<ServerEventDetails> generateServerEventDetails(EventLogsWrapper eventLogsWrapper) {
         logger.info("Generating server event details...");
         List<ServerEventDetails> serverEventDetails = new ArrayList<>();
         Map<String, ServerEventDetails> serverEventDetailsMap = new HashMap<>();
 
-        eventLogs.getServerEventLogs().forEach(event -> {
+        eventLogsWrapper.getServerEventLogs().forEach(event -> {
             logger.debug("Processing server event: {}", event);
 
             if(!serverEventDetailsMap.containsKey(event.getId())) {
@@ -87,11 +85,11 @@ public class EventUtils {
         return duration;
     }
 
-    public EventLogs getEventLogs(String fileAbsolutePath) throws IOException {
+    public EventLogsWrapper getEventLogs(String fileAbsolutePath) throws IOException {
         logger.info("Getting event logs from file: {}", fileAbsolutePath);
 
         ObjectMapper objectMapper = new ObjectMapper();
-        EventLogs eventLogs = new EventLogs();
+        EventLogsWrapper eventLogsWrapper = new EventLogsWrapper();
         FileInputStream inputStream = null;
         Scanner sc = null;
 
@@ -102,10 +100,10 @@ public class EventUtils {
                 String line = sc.nextLine();
                 if(line.contains("\"type\"") && line.toString().contains("\"host\"")) {
                     logger.debug("Adding ServerEventLog: {}", line);
-                    eventLogs.getServerEventLogs().add(objectMapper.readValue(line, ServerEventLog.class));
+                    eventLogsWrapper.getServerEventLogs().add(objectMapper.readValue(line, ServerEventLog.class));
                 } else {
                     logger.debug("Adding EventLog: {}", line);
-                    eventLogs.getEventLogs().add(objectMapper.readValue(line, EventLog.class));
+                    eventLogsWrapper.getEventLogs().add(objectMapper.readValue(line, EventLog.class));
                 }
             }
             if (sc.ioException() != null) {
@@ -121,6 +119,6 @@ public class EventUtils {
                 sc.close();
             }
         }
-        return eventLogs;
+        return eventLogsWrapper;
     }
 }

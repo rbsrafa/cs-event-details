@@ -27,24 +27,24 @@ class EventUtilsTests {
 
 	@Test
 	void utilsGetEventLogsTest() throws IOException {
-		EventLogs eventLogs = utils.getEventLogs(filePath);
+		EventLogsWrapper eventLogsWrapper = utils.getEventLogs(filePath);
 		EventLog el1 = new EventLog("scsmbstgrb", State.STARTED, 1491377495213L);
 
-		Assertions.assertEquals(el1.getId(), eventLogs.getEventLogs().get(0).getId());
-		Assertions.assertEquals(el1.getState(), eventLogs.getEventLogs().get(0).getState());
-		Assertions.assertEquals(el1.getTimestamp(), eventLogs.getEventLogs().get(0).getTimestamp());
+		Assertions.assertEquals(el1.getId(), eventLogsWrapper.getEventLogs().get(0).getId());
+		Assertions.assertEquals(el1.getState(), eventLogsWrapper.getEventLogs().get(0).getState());
+		Assertions.assertEquals(el1.getTimestamp(), eventLogsWrapper.getEventLogs().get(0).getTimestamp());
 	}
 
 	@Test
 	void utilsGetServerEventLogsTest() throws IOException {
-		EventLogs eventLogs = utils.getEventLogs(filePath);
+		EventLogsWrapper eventLogsWrapper = utils.getEventLogs(filePath);
 		ServerEventLog sel1 = new ServerEventLog("scsmbstgra", State.STARTED, 1491377495212L, "APPLICATION_LOG", "12345");
 
-		Assertions.assertEquals(sel1.getId(), eventLogs.getServerEventLogs().get(0).getId());
-		Assertions.assertEquals(sel1.getState(), eventLogs.getServerEventLogs().get(0).getState());
-		Assertions.assertEquals(sel1.getTimestamp(), eventLogs.getServerEventLogs().get(0).getTimestamp());
-		Assertions.assertEquals(sel1.getType(), eventLogs.getServerEventLogs().get(0).getType());
-		Assertions.assertEquals(sel1.getHost(), eventLogs.getServerEventLogs().get(0).getHost());
+		Assertions.assertEquals(sel1.getId(), eventLogsWrapper.getServerEventLogs().get(0).getId());
+		Assertions.assertEquals(sel1.getState(), eventLogsWrapper.getServerEventLogs().get(0).getState());
+		Assertions.assertEquals(sel1.getTimestamp(), eventLogsWrapper.getServerEventLogs().get(0).getTimestamp());
+		Assertions.assertEquals(sel1.getType(), eventLogsWrapper.getServerEventLogs().get(0).getType());
+		Assertions.assertEquals(sel1.getHost(), eventLogsWrapper.getServerEventLogs().get(0).getHost());
 	}
 
 	@Test
@@ -52,8 +52,8 @@ class EventUtilsTests {
 		EventDetails ed1 = new EventDetails("scsmbstgrb", 3, false);
 		EventDetails ed2 = new EventDetails("scsmbstgrc", 8, true);
 
-		EventLogs eventLogs = utils.getEventLogs(filePath);
-		List<EventDetails> eventDetails = utils.generateEventDetails(eventLogs);
+		EventLogsWrapper eventLogsWrapper = utils.getEventLogs(filePath);
+		List<EventDetails> eventDetails = utils.generateEventDetails(eventLogsWrapper);
 
 		Assertions.assertEquals(ed1.getId(), eventDetails.get(0).getId());
 		Assertions.assertEquals(ed1.getDuration(), eventDetails.get(0).getDuration());
@@ -71,8 +71,8 @@ class EventUtilsTests {
 		ServerEventDetails sed1 = new ServerEventDetails("scsmbstgra", 5, true, "APPLICATION_LOG", "12345");
 		ServerEventDetails sed2 = new ServerEventDetails("scsmbstgrd", 2, false, "APPLICATION_LOG", "54321");
 
-		EventLogs eventLogs = utils.getEventLogs(filePath);
-		List<ServerEventDetails> serverEventDetails = utils.generateServerEventDetails(eventLogs);
+		EventLogsWrapper eventLogsWrapper = utils.getEventLogs(filePath);
+		List<ServerEventDetails> serverEventDetails = utils.generateServerEventDetails(eventLogsWrapper);
 
 		serverEventDetails.forEach(System.out::println);
 
