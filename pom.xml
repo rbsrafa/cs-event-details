@@ -20,6 +20,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
+		<project.resource.folder>${project.basedir}/src/main/resources</project.resource.folder>
+		<logfile.path>${project.resource.folder}/logfile.txt</logfile.path>
 	</properties>
 
 	<dependencies>
@@ -59,7 +61,44 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+				<version>1.0.0</version>
+				<executions>
+					<execution>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>write-project-properties</goal>
+						</goals>
+						<configuration>
+							<outputFile>${project.build.outputDirectory}/my.properties</outputFile>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
+		<resources>
+			<resource>
+				<directory>${project.resource.folder}</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>Windows</id>
+			<activation>
+				<os>
+					<family>Windows</family>
+				</os>
+			</activation>
+			<properties>
+				<project.resource.folder>${project.basedir}\src\main\resources</project.resource.folder>
+				<logfile.path>${project.resource.folder}\logfile.txt</logfile.path>
+			</properties>
+		</profile>
+	</profiles>
 
 </project>
