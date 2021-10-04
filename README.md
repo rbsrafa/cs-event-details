@@ -21,6 +21,18 @@ The generated tables are:
    * type
    * host
 
+## Start HSQLDB
+Navigate to `hsqldb` folder and type the command:
+```bash
+java -classpath lib/hsqldb.jar org.hsqldb.server.Server --database.0 file:hsqldb/events_db --dbname.0 events_db
+```
+
+HSQLDB provides a simple DB Manager, to open the GUI, navigate to `hsqldb/lib` and type:
+```bash
+java -jar hsqldb.jar
+```
+> The necessary credentials to access the database can be found on the configuration section below.
+
 ## Running the App
 By default, the app will read the `logfile.txt` present on `src/main/resources/` folder. To run
 the app type the following command on the project's root folder:
