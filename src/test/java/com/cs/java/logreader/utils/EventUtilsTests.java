@@ -74,8 +74,6 @@ class EventUtilsTests {
 		EventLogsWrapper eventLogsWrapper = utils.getEventLogs(filePath);
 		List<ServerEventDetails> serverEventDetails = utils.generateServerEventDetails(eventLogsWrapper);
 
-		serverEventDetails.forEach(System.out::println);
-
 		Assertions.assertEquals(sed1.getId(), serverEventDetails.get(0).getId());
 		Assertions.assertEquals(sed1.getDuration(), serverEventDetails.get(0).getDuration());
 		Assertions.assertEquals(sed1.isAlert(), serverEventDetails.get(0).isAlert());
