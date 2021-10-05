@@ -44,8 +44,8 @@ public class LogReaderApplication implements CommandLineRunner {
 		eventDetailsWrapper.setServerEventDetails(utils.generateServerEventDetails(eventLogsWrapper));
 
 		// Persist Event Details
-		eventDetailsWrapper.getEventDetails().forEach(event -> this.events.save(event));
-		eventDetailsWrapper.getServerEventDetails().forEach(event -> this.serverEvents.save(event));
+		this.events.saveAll(eventDetailsWrapper.getEventDetails());
+		this.serverEvents.saveAll(eventDetailsWrapper.getServerEventDetails());
 	}
 
 }
